@@ -1,3 +1,5 @@
+{# 
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello DecouverteController!{% endblock %}
@@ -17,4 +19,49 @@
         <li>Your template at <code><a href="{{ '/Users/rasih/Desktop/voyage_phet/templates/decouverte/index.html.twig'|file_link(0) }}">templates/decouverte/index.html.twig</a></code></li>
     </ul>
 </div>
+{% endblock %}
+
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="row">
+		<div class="col">
+			<h1>Decouverte</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+
+			{% include '_inc/flash.messages.html.twig' %}
+
+			<p class="text-right">
+				<a href="{{ url('decouverte.form') }}" class="btn btn-primary">Ajouter</a>
+			</p>
+			<table class="table table-striped">
+				<tr>
+					<th>Pays</th>
+					<th>Description</th>
+					<th>Image</th>
+					<th>Continent</th>
+				</tr>
+				{% for decouverte in results %}
+					<tr>
+						<td>{{ decouverte.pays }}</td>
+                        <td class="w-25">
+							<img src="{{ asset('img/decouverte/' ~ decouverte.image) }}" class="img-fluid" alt="">
+						</td>
+						<td>{{ decouverte.description }}€</td>
+						<td>{{ decouverte.continent.name }}</td>
+						<td class="text-right">
+							<a href="{{ url('decouverte.form.update', { id: decouverte.id }) }}" class="btn btn-warning">Modifier</a>
+							<a href="{{ url('decouverte.delete', { id: decouverte.id }) }}" class="btn btn-danger">Supprimer</a>
+						</td>
+
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock %}

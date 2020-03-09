@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Decouverte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Decouverte|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,40 @@ class DecouverteRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Decouverte::class);
+    }
+
+    public function test():Query
+    {
+        $results = $this->createQueryBuilder('decouverte')
+        ->select('count(decouverte.name), continent.name')
+        ->join('decouverte.continent_id', 'continent')
+        ->groupby('decouverte.continent_id', 'continent')
+        ->getQuery()
+            /* ->select('product.name, product.price, category.name AS cName')
+            ->join('product.category', 'category')
+            ->where('product.price > :price')
+            ->andWhere('product.name LIKE :name')
+            ->setParameters([
+                'price' => 500,
+                'name' => '%ma%'
+            ])
+            ->getQuery()*/
+        ;
+
+        //retour de resultats
+        return $results;
+    }
+
+    public function filter($filter): Query
+    {
+        $results = $this->createQueryBuilder('decouverte')
+            ->join('decouverte.continent_id', 'continent')
+            ->where('continent.id = :filter')
+            ->setParameters([
+                'filter' => $filter
+            ])
+            ->getQuery();
+        return $results;
     }
 
     // /**

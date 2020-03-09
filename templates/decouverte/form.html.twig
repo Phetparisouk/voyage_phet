@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="row">
+		<div class="col">
+			<h1>Produits</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			{# form : variable envoyée par le contrôleur #}
+			{{ form_start(form, { attr: { novalidate: 'novalidate' } } ) }}
+				<p>
+					{# name provient de la classe de formulaire (DecouverteType) #}
+					{{ form_label(form.pays, 'Pays:') }}
+					{{ form_widget(form.pays) }}
+				</p>
+				<p>
+					{{ form_label(form.description, 'Description:') }}
+					{{ form_widget(form.description) }}
+				</p>
+				<p>
+					{{ form_label(form.image, 'Image:') }}
+					{{ form_widget(form.image) }}
+				</p>
+				<p>
+					{{ form_label(form.continent, 'Continent:') }}
+					{{ form_widget(form.continent) }}
+				</p>				
+				<p>
+					<input type="submit" class="btn btn-info" value="Valider">
+				</p>
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}
+
+
+
+
+
+
+

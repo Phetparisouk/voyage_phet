@@ -85,10 +85,3 @@ class ContactController extends AbstractController
 		]);
 	}
 }
-
-
-
-
-
-
-
