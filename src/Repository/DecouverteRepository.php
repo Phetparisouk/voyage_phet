@@ -24,8 +24,8 @@ class DecouverteRepository extends ServiceEntityRepository
     {
         $results = $this->createQueryBuilder('decouverte')
         ->select('count(decouverte.name), continent.name')
-        ->join('decouverte.continent_id', 'continent')
-        ->groupby('decouverte.continent_id', 'continent')
+        ->join('decouverte.continent', 'continent')
+        ->groupby('decouverte.continent', 'continent')
         ->getQuery()
             /* ->select('product.name, product.price, category.name AS cName')
             ->join('product.category', 'category')
@@ -45,7 +45,7 @@ class DecouverteRepository extends ServiceEntityRepository
     public function filter($filter): Query
     {
         $results = $this->createQueryBuilder('decouverte')
-            ->join('decouverte.continent_id', 'continent')
+            ->join('decouverte.continent', 'continent')
             ->where('continent.id = :filter')
             ->setParameters([
                 'filter' => $filter

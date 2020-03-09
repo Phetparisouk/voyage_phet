@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Entity\Decouverte;
 use App\Form\DecouverteType;
+use App\Form\ContinentFilterType;
+use App\Form\Model\ContinentFilterModel;
 use App\Repository\DecouverteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +21,21 @@ class DecouverteController extends AbstractController
      */
     public function index(DecouverteRepository $decouverteRepository, Request $request)
     {
-		$results = $decouverteRepository->findAll();
+        $model = new ContinentFilterModel();
+        $form = $this->createForm(ContinentFilterType::class, $model);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $decouverte = $decouverteRepository->filter($model->getContinent());
+            return $this->render('decouverte/index.html.twig', [
+                'decouverte' => $decouverte->getResult(),
+                'form' => $form->createView()
+            ]);
+        }
 
+		$results = $decouverteRepository->findAll();
 		return $this->render('decouverte/index.html.twig', [
-			'results' => $results
+            'results' => $results,
+            'form' => $form->createView()
 		]);
     }
 
@@ -80,7 +93,23 @@ class DecouverteController extends AbstractController
 		// message de confirmation et redirection
 		$this->addFlash('notice', 'La decouverte a été supprimé');
 		return $this->redirectToRoute('decouverte.index');
-	}    
+    }
+    
+    /*
+     * @Route("/decouverte/details/{slug}", name="decouverte.details")
+     */
+    /*
+    public function details(string $slug, DecouverteRepository $decouverteRepository)
+    {
+        $decouverte = $decouverteRepository->findOneBy([
+            'slug' => $slug
+        ]);
+
+        return $this->render('decouverte/details.html.twig', [
+            'decouverte' => $decouverte,
+        ]);
+    }
+    */
 
 
 }

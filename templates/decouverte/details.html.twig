@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="blog-post">
+        <h2 class="blog-post-title">{{ decouverte.pays }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                {{ decouverte.description }}
+            </div>
+            <div class="col-md-6 card-img-right">
+                <img class="width-100" src="{{ asset('img/decouverte/' ~ decouverte.image) }}">
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

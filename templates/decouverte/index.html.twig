@@ -36,6 +36,14 @@
 
 			{% include '_inc/flash.messages.html.twig' %}
 
+            <div class="col-md-4 text-center mar-btm-15">
+                {{ form_start(form) }}
+                {{ form_label(form.continent) }}
+                {{ form_widget(form.continent) }}
+                <button class=" col-md-4 btn btn-outline-primary" type="submit">Filtrer</button>
+                {{ form_end(form) }}
+            </div>
+
 			<p class="text-right">
 				<a href="{{ url('decouverte.form') }}" class="btn btn-primary">Ajouter</a>
 			</p>
@@ -52,9 +60,10 @@
                         <td class="w-25">
 							<img src="{{ asset('img/decouverte/' ~ decouverte.image) }}" class="img-fluid" alt="">
 						</td>
-						<td>{{ decouverte.description }}€</td>
+						<td>{{ decouverte.description }}</td>
 						<td>{{ decouverte.continent.name }}</td>
 						<td class="text-right">
+                            <!--a href=                                                          class="btn btn-warning">Details</a-->
 							<a href="{{ url('decouverte.form.update', { id: decouverte.id }) }}" class="btn btn-warning">Modifier</a>
 							<a href="{{ url('decouverte.delete', { id: decouverte.id }) }}" class="btn btn-danger">Supprimer</a>
 						</td>
